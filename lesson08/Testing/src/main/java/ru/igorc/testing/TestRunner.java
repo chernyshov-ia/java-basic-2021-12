@@ -3,7 +3,7 @@ package ru.igorc.testing;
 import java.util.Scanner;
 
 public class TestRunner {
-    private static Scanner scanner = new Scanner(System.in);
+    final private static Scanner SCANNER = new Scanner(System.in);
 
     private static int readAnswerFromConsole(int maxAnswerNumber) {
         System.out.print("Введите ответ: ");
@@ -13,7 +13,7 @@ public class TestRunner {
 
         do {
             try {
-                response = Integer.parseInt(scanner.nextLine());
+                response = Integer.parseInt(SCANNER.nextLine());
             } catch (NumberFormatException e) {
                 response = 0;
             }
