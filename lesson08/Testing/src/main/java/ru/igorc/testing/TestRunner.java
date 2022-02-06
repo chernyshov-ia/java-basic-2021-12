@@ -2,10 +2,10 @@ package ru.igorc.testing;
 
 import java.util.Scanner;
 
-public class TestRunner {
-    final private static Scanner SCANNER = new Scanner(System.in);
+public class TestRunner implements AutoCloseable{
+    final private Scanner scanner = new Scanner(System.in);
 
-    private static int readAnswerFromConsole(int maxAnswerNumber) {
+    private int readAnswerFromConsole(int maxAnswerNumber) {
         System.out.print("Введите ответ: ");
 
         int response;
@@ -13,7 +13,7 @@ public class TestRunner {
 
         do {
             try {
-                response = Integer.parseInt(SCANNER.nextLine());
+                response = Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
                 response = 0;
             }
@@ -29,7 +29,7 @@ public class TestRunner {
         return response;
     }
 
-    private static boolean askQuestion(Question question) {
+    private boolean askQuestion(Question question) {
         System.out.println(question.getText());
 
         int response;
@@ -54,7 +54,7 @@ public class TestRunner {
         return isRight;
     }
 
-    public static void Run(Test test) {
+    public void run(Test test) {
         int rightAnswers = 0;
         int wrongAnswers = 0;
 
@@ -71,5 +71,10 @@ public class TestRunner {
 
         System.out.println("Правильных ответов: " + rightAnswers);
         System.out.println("Неправильных ответов: " + wrongAnswers);
+    }
+
+    @Override
+    public void close() {
+        scanner.close();
     }
 }
