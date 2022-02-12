@@ -8,7 +8,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 
 public class App {
-    public final static int SIZE = 50000;
+    public final static int SIZE = 30000;
 
     public static List<Integer> generateList(int size) {
         List<Integer> list = new ArrayList<>(size);
