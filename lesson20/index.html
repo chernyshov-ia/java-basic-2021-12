@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Таблица студентов</title>
+    <style>
+        .input-form {
+            width: 400px;
+            border: 1px solid steelblue;
+            padding: 5px;
+        }
+        .input-form__item, button {
+          margin: 10px;
+        }
+
+        table {
+            width: 600px;
+        }
+        table, table th, table td {
+            border: 1px solid steelblue;
+            border-collapse: collapse;
+        }
+    </style>
+
+    <script type="text/javascript">
+        function addStudentTableRow(name, sex, birthday) {
+            const tab = document.getElementById("tablebody");
+            
+            let options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+
+            let newRow = tab.insertRow(tab.rows.length);
+            newRow.insertCell(0).appendChild(document.createTextNode(name));
+            newRow.insertCell(1).appendChild(document.createTextNode(sex));
+            newRow.insertCell(2).appendChild(document.createTextNode(new Intl.DateTimeFormat('ru-RU', options).format(birthday)));
+            newRow.insertCell(3).appendChild(document.createTextNode( Math.floor( ( new Date() - birthday ) / 1000/60/60/24/365 )));            
+
+            let ageSum = 0;
+            for(let i=0; i < tab.rows.length; i++) {
+                ageSum += Number(tab.rows[i].cells[3].textContent);
+            }
+
+            let ageAverage = 0;
+            if (tab.rows.length > 0) {
+                ageAverage = Math.round( ageSum / tab.rows.length );
+            }
+
+            document.getElementById("age").textContent = ageAverage;            
+        }
+
+        function addStudent() {
+             let birthday = document.getElementById("birth").valueAsDate;
+             let sex = document.getElementById("sex").value;
+             let name = document.getElementById("name").value;
+
+             if (birthday == undefined || birthday == null || birthday == '') {
+                alert("Не введен день рождения");
+                return;
+             }
+
+             if (birthday >= new Date()) {
+                alert("День рождения указан неправильно");
+                return;
+             }
+            
+             if (name == undefined || name == null || name == '') {
+                alert("Не введено имя");
+                return;
+             }        
+             
+             addStudentTableRow(name, sex, birthday)
+        } 
+    </script>
+</head>
+
+<body>
+    <h3>Форма добавления студентов</h3>
+    <div class="input-form">
+        <div class="input-form__item">
+            <div>Имя студента:</div>
+            <input type="text" id="name">
+        </div>
+
+        <div class="input-form__item">
+            <div>Дата рождения:</div>
+            <input type="date" id="birth">
+        </div>
+        
+        <div class="input-form__item">
+            <div>Пол:</div>
+            <select id="sex">
+                <option value="мужчина">мужчина</option>
+                <option value="женщина">женщина</option>
+            </select>
+        </div>
+        
+        <button onclick="addStudent()">Добавить</button>
+    </div>
+
+    <h3>Таблица студентов</h3>
+
+    <table id="tab">
+        <thead>
+            <tr>
+                <th>Имя студента</th>
+                <th>Пол</th>
+                <th>Дата рождения</th>
+                <th>Возраст</th>
+            </tr>
+        </thead>
+        <tbody id="tablebody">
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">&nbsp;</td>
+            </tr> 
+            <tr>
+                <td colspan="3">Средний возраст студентов:</td>
+                <td id="age">0</td>
+            </tr>             
+        </tfoot>
+    </table>
+
+    <script>
+        addStudentTableRow('Иванов Иван Иванович', 'мужчина', new Date(1992, 2, 23));
+    </script>
+</body>
+</html>
