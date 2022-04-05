@@ -1,19 +1,27 @@
 package ru.otus;
 
-public enum Currency implements Wordable {
-    RUBLE(new RubleWordsConverter());
+public enum Currency {
+    RUBLE("рубль","рублей","рубля");
 
-    private final Wordable wordsConverter;
+    private final String nameSingular;
+    private final String namePlural;
+    private final String nameRP;
 
-    Currency(Wordable wordsConverter) {
-        this.wordsConverter = wordsConverter;
+    Currency(String nameSingular, String namePlural, String nameRP) {
+        this.nameSingular = nameSingular;
+        this.namePlural = namePlural;
+        this.nameRP = nameRP;
     }
 
-    @Override
-    public String toWords(int amount) {
-        if( wordsConverter == null ) {
-            return Integer.toString(amount);
-        }
-        return wordsConverter.toWords(amount);
+    public String getNameSingular() {
+        return nameSingular;
+    }
+
+    public String getNamePlural() {
+        return namePlural;
+    }
+
+    public String getNameRP() {
+        return nameRP;
     }
 }

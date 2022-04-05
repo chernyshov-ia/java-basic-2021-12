@@ -26,7 +26,7 @@ public class Presentation implements AutoCloseable {
                     break;
                 }
                 int amount = Integer.parseInt(textAmount);
-                writer.println(currency.toWords(amount));
+                writer.println(CurrencyToStringConvertor.convert(currency, amount));
                 writer.flush();
             }
         } catch (Exception E) {
